@@ -23,20 +23,20 @@ The mark is a hashtag (`#`) built from two slanted uprights and two crossbars, s
 
 ## Files
 
-Every asset comes as an `svg/` (scalable, for print or any size) and a `png/` (transparent where the name says so).
+Every file is in `svg/` (scalable, for print or any size) and `png/`.
+
+Every asset comes in a **dark** version (black background, off-white logo) and a **light** version (off-white background, black logo). The logos also come with no background at all (`transparent-white` for dark photos, `transparent-black` for light ones).
 
 | File | What it's for |
 |---|---|
-| `01-mark-*` | The # mark on its own. Use it for favicons, stickers and watermarks. |
-| `02-logo-horizontal-*` | The main logo. Use it for website headers, email signatures and deck covers. |
-| `03-logo-stacked-*` | The square-ish logo. Use it for posters, merch and the end cards of videos. |
-| `04-wordmark-*` | Just the HASHFIT word. |
-| `05-transformation-badge` | Stamp for transformation and results posts. Put it in a corner of the photo. |
-| `06-tag-before`, `06-tag-after`, `06-tag-weeks` | Labels for before/after photos. |
-| `07-transformation-post-overlay` | A 1080x1350 Instagram frame. The two photo windows are see-through, so you place this on top of the before and after photos in Canva or CapCut, then change the headline and client name. |
-| `08-profile-picture` | 1080x1080 profile picture for Instagram and TikTok. |
-
-Suffixes: `dark` means it's on a black background, `light` means it's on a bone background, and `transparent-white` or `transparent-black` means there's no background.
+| `01-mark-dark/light` | The # mark on its own. Use it for favicons, stickers and watermarks. |
+| `02-logo-horizontal-dark/light` | The main logo. Use it for website headers, email signatures and deck covers. |
+| `03-logo-stacked-dark/light` | The square-ish logo. Use it for posters, merch and the end cards of videos. |
+| `04-wordmark-dark/light` | Just the HASHFIT word. |
+| `05-transformation-badge-dark/light` | Stamp for transformation and results posts. Put it in a corner of the photo. |
+| `06-tag-before-dark/light`, `06-tag-after-dark/light`, `06-tag-weeks-dark/light` | Labels for before/after photos. The light BEFORE and AFTER tags are outlined pills. |
+| `07-transformation-post-overlay-dark/light` | A 1080x1350 Instagram frame. The two photo windows are see-through, so you place this on top of the before and after photos in Canva or CapCut. The headline and client name are part of the image, so cover them with your own Anton text or ask for a new export. |
+| `08-profile-picture-dark/light` | 1080x1080 profile picture for Instagram and TikTok. |
 
 ## Rules
 

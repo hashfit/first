@@ -14,7 +14,7 @@ BONE = "#F4F1EC"
 ASH = "#8A847C"
 CHAR = "#1C1A19"
 
-FONTS = {k: TTFont(os.path.join(HERE, "fonts", f"{k}.ttf")) for k in ("anton", "inter", "serif")}
+FONTS = {k: TTFont(os.path.join(os.environ.get("FONT_DIR", os.path.join(HERE, "fonts")), "", f"{k}.ttf")) for k in ("anton", "inter", "serif")}
 
 
 def text(font_key, s, size, x, y, fill, tracking=0.0, anchor="start"):
@@ -112,78 +112,94 @@ def stacked(fg, bg, name):
 stacked(BONE, BLACK, "03-logo-stacked-dark")
 stacked(BLACK, BONE, "03-logo-stacked-light")
 stacked("#FFFFFF", None, "03-logo-stacked-transparent-white")
+stacked(BLACK, None, "03-logo-stacked-transparent-black")
+
+# Themes: dark = black background / bone ink, light = bone background / black ink.
+THEMES = {
+    "dark":  dict(bg=BLACK, ink=BONE, sub=ASH, pill=BLACK, pill_ink=BONE, after=RED, after_ink="#FFFFFF", badge_mark_bar=BLACK),
+    "light": dict(bg=BONE, ink=BLACK, sub="#6B655E", pill=BLACK, pill_ink=BONE, after=RED, after_ink="#FFFFFF", badge_mark_bar=BLACK),
+}
 
 # ---------- 4. Wordmark only ----------
+for t, c in THEMES.items():
+    ch = cap_height("anton", 300)
+    wm, ww = text("anton", "HASHFIT", 300, 90, 90 + ch, c["ink"], tracking=0.02)
+    save(f"04-wordmark-{t}", svg(int(ww + 180), int(ch + 180), wm, c["bg"]))
 wm, ww = text("anton", "HASHFIT", 300, 60, 60 + cap_height("anton", 300), "#FFFFFF", tracking=0.02)
 save("04-wordmark-transparent-white", svg(int(ww + 120), int(cap_height("anton", 300) + 120), wm))
 wm, ww = text("anton", "HASHFIT", 300, 60, 60 + cap_height("anton", 300), BLACK, tracking=0.02)
 save("04-wordmark-transparent-black", svg(int(ww + 120), int(cap_height("anton", 300) + 120), wm))
 
 # ---------- 5. Transformation badge (watermark for results posts) ----------
-def badge(name, transparent):
+def badge(t, c):
     H = 260
     red_w = H
     m = mark(46, 46, H - 92, BONE, BLACK)
     ch1 = cap_height("anton", 120)
-    word, ww = text("anton", "HASHFIT", 120, red_w + 50, 48 + ch1, BONE, tracking=0.03)
+    word, ww = text("anton", "HASHFIT", 120, red_w + 50, 48 + ch1, c["ink"], tracking=0.03)
     t2, tw = text("inter", "TRANSFORMATION", 38, red_w + 54, 48 + ch1 + 78, RED, tracking=0.30)
     W = int(red_w + 50 + max(ww, tw) + 60)
-    body = (f'<rect width="{W}" height="{H}" rx="18" fill="{BLACK}"/>'
+    body = (f'<rect width="{W}" height="{H}" rx="18" fill="{c["bg"]}"/>'
             f'<path d="M18 0H{red_w}V{H}H18a18 18 0 0 1-18-18V18A18 18 0 0 1 18 0Z" fill="{RED}"/>'
             + m + word + t2)
-    save(name, svg(W, H, body))
-
-badge("05-transformation-badge", True)
+    save(f"05-transformation-badge-{t}", svg(W, H, body))
 
 # ---------- 6. Before / After / Weeks tags ----------
-def pill(label, fill, fg, name):
+def pill(label, fill, fg, name, stroke=None):
     size = 110
     ch = cap_height("anton", size)
-    t, tw = text("anton", label, size, 70, 55 + ch, fg, tracking=0.08)
+    tx, tw = text("anton", label, size, 70, 55 + ch, fg, tracking=0.08)
     W, H = int(tw + 140), int(ch + 110)
-    save(name, svg(W, H, f'<rect width="{W}" height="{H}" rx="{H/2}" fill="{fill}"/>' + t))
+    st = f' stroke="{stroke}" stroke-width="8"' if stroke else ""
+    inset = 4 if stroke else 0
+    rect = f'<rect x="{inset}" y="{inset}" width="{W - 2 * inset}" height="{H - 2 * inset}" rx="{H / 2 - inset}" fill="{fill}"{st}/>'
+    save(name, svg(W, H, rect + tx))
 
-pill("BEFORE", BLACK, BONE, "06-tag-before")
-pill("AFTER", RED, "#FFFFFF", "06-tag-after")
-
-num, nw = text("anton", "12", 260, 60, 60 + cap_height("anton", 260), "#FFFFFF")
-lab, lw = text("inter", "WEEKS", 58, 60 + nw + 34, 60 + cap_height("anton", 260), BONE, tracking=0.25)
-bar = f'<rect x="{60 + nw + 38}" y="{60 + cap_height("anton", 260) - cap_height("inter", 58) - 44:.0f}" width="{lw * 0.35:.0f}" height="16" fill="{RED}"/>'
-W = int(60 + nw + 34 + lw + 70)
-save("06-tag-weeks", svg(W, int(cap_height("anton", 260) + 120), f'<rect width="{W}" height="{int(cap_height("anton", 260) + 120)}" rx="24" fill="{BLACK}"/>' + num + lab + bar))
+def weeks(t, c):
+    chn = cap_height("anton", 260)
+    num, nw = text("anton", "12", 260, 60, 60 + chn, c["ink"])
+    lab, lw = text("inter", "WEEKS", 58, 60 + nw + 34, 60 + chn, c["ink"], tracking=0.25)
+    bar = f'<rect x="{60 + nw + 38}" y="{60 + chn - cap_height("inter", 58) - 44:.0f}" width="{lw * 0.35:.0f}" height="16" fill="{RED}"/>'
+    W, H = int(60 + nw + 34 + lw + 70), int(chn + 120)
+    save(f"06-tag-weeks-{t}", svg(W, H, f'<rect width="{W}" height="{H}" rx="24" fill="{c["bg"]}"/>' + num + lab + bar))
 
 # ---------- 7. Transformation post overlay (1080x1350, photo windows are transparent) ----------
-def post_overlay():
+def post_overlay(t, c):
     W, H = 1080, 1350
     gap, top, side = 16, 290, 40
     pw = (W - side * 2 - gap) / 2
     ph = 860
-    # frame with two transparent windows (evenodd)
     r = 14
     def rr(x, y, w, h):
         return (f"M{x + r} {y}H{x + w - r}A{r} {r} 0 0 1 {x + w} {y + r}V{y + h - r}A{r} {r} 0 0 1 {x + w - r} {y + h}"
                 f"H{x + r}A{r} {r} 0 0 1 {x} {y + h - r}V{y + r}A{r} {r} 0 0 1 {x + r} {y}Z")
-    frame = f'<path fill-rule="evenodd" fill="{BLACK}" d="M0 0H{W}V{H}H0Z {rr(side, top, pw, ph)} {rr(side + pw + gap, top, pw, ph)}"/>'
-    head_m = mark(side, 44, 56, BONE, RED)
-    head_w, _ = text("anton", "HASHFIT", 52, side + 56 + 20, 44 + 56, BONE, tracking=0.03)
+    frame = f'<path fill-rule="evenodd" fill="{c["bg"]}" d="M0 0H{W}V{H}H0Z {rr(side, top, pw, ph)} {rr(side + pw + gap, top, pw, ph)}"/>'
+    head_m = mark(side, 44, 56, c["ink"], RED)
+    head_w, _ = text("anton", "HASHFIT", 52, side + 56 + 20, 44 + 56, c["ink"], tracking=0.03)
     kicker, _ = text("inter", "CLIENT TRANSFORMATION", 24, W - side, 44 + 56, RED, tracking=0.28, anchor="end")
-    headline, _ = text("anton", "-9KG IN 12 WEEKS", 100, side, 250, BONE, tracking=0.01)
+    headline, _ = text("anton", "-9KG IN 12 WEEKS", 100, side, 250, c["ink"], tracking=0.01)
     b_tag = f'<rect x="{side + 20}" y="{top + ph - 76}" width="170" height="56" rx="28" fill="{BLACK}"/>'
     b_txt, _ = text("anton", "BEFORE", 34, side + 20 + 85, top + ph - 76 + 43, BONE, tracking=0.08, anchor="middle")
     a_x = side + pw + gap + 20
     a_tag = f'<rect x="{a_x}" y="{top + ph - 76}" width="150" height="56" rx="28" fill="{RED}"/>'
     a_txt, _ = text("anton", "AFTER", 34, a_x + 75, top + ph - 76 + 43, "#FFFFFF", tracking=0.08, anchor="middle")
     foot_y = top + ph + 90
-    name_t, _ = text("anton", "CLIENT NAME", 56, side, foot_y, BONE, tracking=0.03)
-    sub_t, _ = text("inter", "COACHING WITH AALIYAN", 24, side, foot_y + 50, ASH, tracking=0.28)
+    name_t, _ = text("anton", "CLIENT NAME", 56, side, foot_y, c["ink"], tracking=0.03)
+    sub_t, _ = text("inter", "COACHING WITH AALIYAN", 24, side, foot_y + 50, c["sub"], tracking=0.28)
     cta_t, _ = text("inter", "APPLY VIA LINK IN BIO", 24, W - side, foot_y + 50, RED, tracking=0.2, anchor="end")
-    rule = f'<rect x="{side}" y="{foot_y - 90}" width="{W - side * 2}" height="0"/>'
-    body = frame + head_m + head_w + kicker + headline + b_tag + b_txt + a_tag + a_txt + name_t + sub_t + cta_t + rule
-    save("07-transformation-post-overlay", svg(W, H, body))
+    body = frame + head_m + head_w + kicker + headline + b_tag + b_txt + a_tag + a_txt + name_t + sub_t + cta_t
+    save(f"07-transformation-post-overlay-{t}", svg(W, H, body))
 
-post_overlay()
+for t, c in THEMES.items():
+    badge(t, c)
+    weeks(t, c)
+    post_overlay(t, c)
+    # ---------- 8. Profile picture ----------
+    save(f"08-profile-picture-{t}", svg(1080, 1080, mark(290, 290, 500, c["ink"], RED), c["bg"]))
 
-# ---------- 8. Profile picture ----------
-save("08-profile-picture", svg(1080, 1080, mark(290, 290, 500, BONE, RED), BLACK))
+pill("BEFORE", BLACK, BONE, "06-tag-before-dark")
+pill("BEFORE", BONE, BLACK, "06-tag-before-light", stroke=BLACK)
+pill("AFTER", RED, "#FFFFFF", "06-tag-after-dark")
+pill("AFTER", BONE, RED, "06-tag-after-light", stroke=RED)
 
 print("done")
