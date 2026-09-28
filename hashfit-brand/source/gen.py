@@ -208,3 +208,14 @@ print("done")
 CV_LIGHT_BG, CV_DARK_BG = "#FFFFFF", "#111111"
 save("09-coachvault-logo-light", svg(1000, 1000, mark(200, 200, 600, BLACK, RED), CV_LIGHT_BG))
 save("09-coachvault-logo-dark", svg(1000, 1000, mark(200, 200, 600, BONE, RED), CV_DARK_BG))
+
+# ---------- 10. Post logos: compact mark + wordmark, transparent, tight crop, no tagline ----------
+def post_logo(fg, name):
+    size, pad = 200, 24
+    ch = cap_height("anton", size)
+    word, ww = text("anton", "HASHFIT", size, pad + ch * 1.06 + 44, pad + ch, fg, tracking=0.03)
+    body = mark(pad + ch * 0.04, pad, ch, fg, RED) + word
+    save(name, svg(int(pad + ch * 1.06 + 44 + ww + pad), int(ch + pad * 2), body))
+
+post_logo("#FFFFFF", "10-post-logo-white")
+post_logo(BLACK, "10-post-logo-dark")

@@ -37,7 +37,8 @@ Every asset comes in a **dark** version (black background, off-white logo) and a
 | `06-tag-before-dark/light`, `06-tag-after-dark/light`, `06-tag-weeks-dark/light` | Labels for before/after photos. The light BEFORE and AFTER tags are outlined pills. |
 | `07-transformation-post-overlay-dark/light` | A 1080x1350 Instagram frame. The two photo windows are see-through, so you place this on top of the before and after photos in Canva or CapCut. The headline and client name are part of the image, so cover them with your own Anton text or ask for a new export. |
 | `08-profile-picture-dark/light` | 1080x1080 profile picture for Instagram and TikTok. |
-| `09-coachvault-logo-light` / `09-coachvault-logo-dark` | Coach Vault logo uploads. Backgrounds are exactly `#FFFFFF` and `#111111`, matching Coach Vault's logo boxes. For its post logos, use `01-mark-transparent-white` and `01-mark-transparent-black`. |
+| `09-coachvault-logo-light` / `09-coachvault-logo-dark` | Coach Vault logo uploads. Backgrounds are exactly `#FFFFFF` and `#111111`, matching Coach Vault's logo boxes. For its post logos, use `10-post-logo-white` and `10-post-logo-dark`. |
+| `10-post-logo-white` / `10-post-logo-dark` | Post logo: # plus HASHFIT, tightly cropped, no background. The tagline is left off because it would be too small to read on a photo. White is for dark photos, dark is for light photos. |
 
 ## Rules
 
