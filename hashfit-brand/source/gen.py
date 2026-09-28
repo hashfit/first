@@ -203,3 +203,8 @@ pill("AFTER", RED, "#FFFFFF", "06-tag-after-dark")
 pill("AFTER", BONE, RED, "06-tag-after-light", stroke=RED)
 
 print("done")
+
+# ---------- 9. Coach Vault platform logos (backgrounds match its logo preview boxes) ----------
+CV_LIGHT_BG, CV_DARK_BG = "#FFFFFF", "#111111"
+save("09-coachvault-logo-light", svg(1000, 1000, mark(200, 200, 600, BLACK, RED), CV_LIGHT_BG))
+save("09-coachvault-logo-dark", svg(1000, 1000, mark(200, 200, 600, BONE, RED), CV_DARK_BG))
