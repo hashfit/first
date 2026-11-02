@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Watch This First | HASHFIT</title>
-  <meta name="description" content="How I coach, and whether it's a fit for you. Coaching with Aaliyan.">
+  <meta name="description" content="The full rundown on how I coach, before we talk. Coaching with Aaliyan.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0A0A0A">
   <link rel="icon" type="image/svg+xml" href="../assets/mark.svg">
@@ -21,18 +21,14 @@
        ====================================================== -->
   <script>
     var PAGE = {
-      // Paste your VSL link between the quotes
-      // (YouTube unlisted, Vimeo, Loom, Wistia or Google Drive all work)
+      // Your VSL link (YouTube unlisted, Vimeo, Loom, Wistia or Google Drive)
       videoUrl: "https://fast.wistia.com/embed/medias/momfxsipp6",
 
       // true if you filmed it upright on your phone, false if it's landscape
       vertical: false,
 
-      // Your Discovery Call booking link
-      bookingUrl: "https://calendly.com/aaliyanh21/strategy_call",
-
-      // Where people go straight after they book (the pre-call video page)
-      afterBooking: "../precall/"
+      // Seconds to skip at the start of the video (0 plays it from the top)
+      startAt: 0
     };
   </script>
 
@@ -42,9 +38,9 @@
 
   <main class="wrap">
     <section class="hero">
-      <span class="tag">Coaching with Aaliyan</span>
+      <span class="tag">Before your call</span>
       <h1>Watch this <em>first</em></h1>
-      <p class="sub">This is how I coach and who it's actually for. Watch it through, and if it sounds like you, grab a call underneath.</p>
+      <p class="sub">This is the whole rundown on how I coach, so you know what you're walking into before we talk.</p>
     </section>
 
     <div class="video" id="video">
@@ -57,16 +53,67 @@
     </div>
     <p class="video-note">Turn your sound on.</p>
 
-    <div class="cta-row">
-      <a class="btn" href="#book">Book your call</a>
-    </div>
+    <section class="section proof" aria-labelledby="proof-h">
+      <p class="label">People who were where you are</p>
+      <h2 class="h2" id="proof-h">Hear it from them</h2>
 
-    <section class="section" id="book">
-      <p class="label">Book your call</p>
-      <p class="muted" style="margin:0 0 16px">Pick a time that works. It's booked as an hour but most of them run twenty to thirty minutes. Once you've booked you'll get taken to a short video to watch before we talk.</p>
-      <div class="booking">
-        <div class="calendly-inline-widget" id="calendly"></div>
+      <div class="clip">
+        <video src="/prep/assets/nathan.mp4" poster="/prep/assets/nathan-poster.jpg" controls playsinline preload="metadata"></video>
+        <blockquote>
+          <p>"Without that I wouldn't have the consistency at all. That was always pulling me back to square one."</p>
+          <cite>Nathan, 9.1kg down in 3 months</cite>
+        </blockquote>
       </div>
+
+      <div class="cards">
+        <figure class="card">
+          <img src="/prep/assets/photo_tane_0.jpg" alt="Tane with Aaliyan at the gym" loading="lazy">
+          <figcaption>
+            <h3>Tane</h3>
+            <span class="stat">10kg fat off, 4kg muscle on</span>
+            <p>Working 45 plus hours a week. Ten months of just running the system, no crash cut.</p>
+          </figcaption>
+        </figure>
+        <figure class="card">
+          <img src="/prep/assets/photo_melvin_0.jpg" alt="Melvin, client transformation photo" loading="lazy">
+          <figcaption>
+            <h3>Melvin</h3>
+            <span class="stat">5kg fat off</span>
+            <p>Working 45 plus hours a week while doing uni, and still playing soccer on top. He still got lean. Veins in his arms now.</p>
+          </figcaption>
+        </figure>
+        <figure class="card">
+          <img src="/prep/assets/photo_gab_0.jpg" alt="Gab, client transformation photo" loading="lazy">
+          <figcaption>
+            <h3>Gab</h3>
+            <span class="stat">3kg fat off, 1kg muscle on</span>
+            <p>Years out injured and working 40 hours a week. Came back leaner and stronger than before the injury.</p>
+          </figcaption>
+        </figure>
+        <figure class="card">
+          <img src="/prep/assets/photo_11kg.jpg" alt="Hayden before and after, June to September, 11kg down" loading="lazy">
+          <figcaption>
+            <h3>Hayden</h3>
+            <span class="stat">11kg down in 3 months</span>
+            <p>Irregular shifts, late nights and early starts. We built the plan around his roster instead of waiting for life to calm down.</p>
+            <p class="quote">"I'm most proud of me being consistent and pushing myself to get the results I'm wanting."</p>
+          </figcaption>
+        </figure>
+        <figure class="card wide">
+          <img src="/prep/assets/photo_rahul.jpg" alt="Rahul, client transformation photos" loading="lazy">
+          <figcaption>
+            <h3>Rahul</h3>
+            <span class="stat">5% body fat down, 3kg muscle on</span>
+            <p>Demanding full time job the whole way through. He lost about a fifth of the fat on his body and put on 3kg of lean muscle in a few months. No random workouts and no trends, just a plan he could actually stick to. The confidence came with it.</p>
+          </figcaption>
+        </figure>
+      </div>
+      <p class="legal">Client photos used with permission. Unretouched. Individual results vary.</p>
+    </section>
+
+    <section class="section end">
+      <p class="label">See you on the call</p>
+      <p class="muted" style="margin:0">If you need to move your time, use the reschedule link in your Calendly confirmation email.</p>
     </section>
   </main>
 
@@ -77,35 +124,11 @@
 
   <script src="../assets/video.js"></script>
   <script>
-    (function () {
-      mountVideo(document.getElementById("video"), PAGE.videoUrl, {
-        vertical: PAGE.vertical,
-        title: "Coaching with Aaliyan"
-      });
-
-      // Calendly booking box, coloured to match the site
-      var url = PAGE.bookingUrl +
-        (PAGE.bookingUrl.indexOf("?") === -1 ? "?" : "&") +
-        "hide_gdpr_banner=1&background_color=1c1a19&text_color=f4f1ec&primary_color=e8312e";
-
-      var s = document.createElement("script");
-      s.src = "https://assets.calendly.com/assets/external/widget.js";
-      s.async = true;
-      s.onload = function () {
-        Calendly.initInlineWidget({ url: url, parentElement: document.getElementById("calendly") });
-      };
-      document.body.appendChild(s);
-
-      // The moment they book, send them to the pre-call video page.
-      // The short wait lets Calendly's own redirect go first if you've
-      // switched that on, since it carries their name and call time.
-      window.addEventListener("message", function (e) {
-        if (e.origin !== "https://calendly.com") return;
-        if (e.data && e.data.event === "calendly.event_scheduled") {
-          setTimeout(function () { window.location.href = PAGE.afterBooking; }, 1500);
-        }
-      });
-    })();
+    mountVideo(document.getElementById("video"), PAGE.videoUrl, {
+      vertical: PAGE.vertical,
+      start: PAGE.startAt,
+      title: "Coaching with Aaliyan"
+    });
   </script>
 </body>
 </html>

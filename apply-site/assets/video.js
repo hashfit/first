@@ -3,10 +3,11 @@
   Works with a YouTube, Vimeo, Loom, Wistia or Google Drive link,
   or a direct link to an .mp4 / .webm / .mov file.
 
-  mountVideo(element, url, { vertical: false, email: "" })
+  mountVideo(element, url, { vertical: false, email: "", start: 0 })
   - vertical: true if you filmed it upright on your phone (9:16)
   - email: if the video is on Wistia, this tags the view with that person's
     email so Wistia shows you exactly how much of it they watched
+  - start: seconds to skip at the start (e.g. 2 skips the first 2 seconds)
 */
 (function () {
   function youtubeId(u) {
@@ -16,7 +17,8 @@
     return m ? m[2] : null;
   }
 
-  function embedSrc(raw, email) {
+  function embedSrc(raw, email, start) {
+    start = Math.max(0, Math.floor(Number(start) || 0));
     var u;
     try { u = new URL(raw); } catch (e) { return null; }
     var host = u.hostname.replace(/^www\./, "");
@@ -24,7 +26,7 @@
     if (host === "youtube.com" || host === "m.youtube.com" || host === "youtu.be" || host === "youtube-nocookie.com") {
       var id = youtubeId(u);
       if (!id) return null;
-      return { kind: "iframe", src: "https://www.youtube-nocookie.com/embed/" + id + "?rel=0&modestbranding=1&playsinline=1" };
+      return { kind: "iframe", src: "https://www.youtube-nocookie.com/embed/" + id + "?rel=0&modestbranding=1&playsinline=1" + (start ? "&start=" + start : "") };
     }
 
     if (host === "vimeo.com" || host === "player.vimeo.com") {
@@ -34,13 +36,14 @@
       var hash = parts[1] || u.searchParams.get("h");
       var src = "https://player.vimeo.com/video/" + vid + "?title=0&byline=0&portrait=0&dnt=1";
       if (hash) src += "&h=" + hash;
+      if (start) src += "#t=" + start + "s";
       return { kind: "iframe", src: src };
     }
 
     if (host === "loom.com") {
       var lm = u.pathname.match(/\/(share|embed)\/([^/?]+)/);
       if (!lm) return null;
-      return { kind: "iframe", src: "https://www.loom.com/embed/" + lm[2] + "?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" };
+      return { kind: "iframe", src: "https://www.loom.com/embed/" + lm[2] + "?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" + (start ? "&t=" + start : "") };
     }
 
     if (/wistia\.(com|net)$/.test(host)) {
@@ -48,6 +51,7 @@
       if (!wm) return null;
       var wsrc = "https://fast.wistia.net/embed/iframe/" + wm[2] + "?playerColor=E8312E";
       if (email) wsrc += "&wemail=" + encodeURIComponent(email);
+      if (start) wsrc += "&time=" + start;
       return { kind: "iframe", src: wsrc };
     }
 
@@ -58,7 +62,7 @@
     }
 
     if (/\.(mp4|webm|mov|m4v)$/i.test(u.pathname)) {
-      return { kind: "file", src: raw };
+      return { kind: "file", src: start ? raw.split("#")[0] + "#t=" + start : raw };
     }
 
     return { kind: "iframe", src: raw };
@@ -68,7 +72,7 @@
     opts = opts || {};
     if (opts.vertical) box.classList.add("vertical");
 
-    var found = url && url.trim() ? embedSrc(url.trim(), opts.email) : null;
+    var found = url && url.trim() ? embedSrc(url.trim(), opts.email, opts.start) : null;
     if (!found) return; // leaves the "video coming soon" box in place
 
     box.innerHTML = "";

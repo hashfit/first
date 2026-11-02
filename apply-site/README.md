@@ -1,11 +1,13 @@
 # HASHFIT apply site
 
+The live copies are in the `hashfit/hashfit-site` repo (`public/precall/`, `public/vsl/`, `public/assets/call/`) at apply.hashfit.org/precall/ and apply.hashfit.org/vsl/. Edit them there. The VSL page's testimonial photos come from that site's `/prep/assets/`, so they only show on the live site.
+
 Two pages, both in the HASHFIT branding:
 
 | Page | Folder | What it's for |
 |---|---|---|
 | Pre-call | `precall/` | Where people land straight after they book. Plays the pre-call video and tells them to send you the word from the end. |
-| VSL | `vsl/` | The page you send people manually. Plays the VSL, with your Discovery Call booking box under it. Booking from here sends them straight to the pre-call page. |
+| VSL | `vsl/` | The page you send people manually a day after they book. Plays the VSL with client testimonials under it. |
 
 `assets/` holds the logo, the styles and the video player code that both pages share. Keep the three folders together when you upload.
 
