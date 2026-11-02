@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watch This First | HASHFIT</title>
+  <meta name="description" content="How I coach, and whether it's a fit for you. Coaching with Aaliyan.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" type="image/svg+xml" href="../assets/mark.svg">
+  <link rel="apple-touch-icon" href="../assets/mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+  <!-- ======================================================
+       EDIT THESE LINES. That's all you need to touch.
+       ====================================================== -->
+  <script>
+    var PAGE = {
+      // Paste your VSL link between the quotes
+      // (YouTube unlisted, Vimeo, Loom, Wistia or Google Drive all work)
+      videoUrl: "",
+
+      // true if you filmed it upright on your phone, false if it's landscape
+      vertical: false,
+
+      // Your Discovery Call booking link
+      bookingUrl: "https://calendly.com/aaliyanh21/strategy_call",
+
+      // Where people go straight after they book (the pre-call video page)
+      afterBooking: "../precall/"
+    };
+  </script>
+
+  <header class="wrap top">
+    <img src="../assets/logo.svg" alt="HASHFIT">
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <span class="tag">Coaching with Aaliyan</span>
+      <h1>Watch this <em>first</em></h1>
+      <p class="sub">This is how I coach and who it's actually for. Watch it through, and if it sounds like you, grab a call underneath.</p>
+    </section>
+
+    <div class="video" id="video">
+      <div class="video-empty">
+        <div>
+          <img src="../assets/mark.svg" alt=""><br>
+          Video coming soon
+        </div>
+      </div>
+    </div>
+    <p class="video-note">Turn your sound on.</p>
+
+    <div class="cta-row">
+      <a class="btn" href="#book">Book your call</a>
+    </div>
+
+    <section class="section" id="book">
+      <p class="label">Book your call</p>
+      <p class="muted" style="margin:0 0 16px">Pick a time that works. It's booked as an hour but most of them run twenty to thirty minutes. Once you've booked you'll get taken to a short video to watch before we talk.</p>
+      <div class="booking">
+        <div class="calendly-inline-widget" id="calendly"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <img src="../assets/mark.svg" alt="">
+    HASHFIT &middot; Coaching with Aaliyan
+  </footer>
+
+  <script src="../assets/video.js"></script>
+  <script>
+    (function () {
+      mountVideo(document.getElementById("video"), PAGE.videoUrl, {
+        vertical: PAGE.vertical,
+        title: "Coaching with Aaliyan"
+      });
+
+      // Calendly booking box, coloured to match the site
+      var url = PAGE.bookingUrl +
+        (PAGE.bookingUrl.indexOf("?") === -1 ? "?" : "&") +
+        "hide_gdpr_banner=1&background_color=1c1a19&text_color=f4f1ec&primary_color=e8312e";
+
+      var s = document.createElement("script");
+      s.src = "https://assets.calendly.com/assets/external/widget.js";
+      s.async = true;
+      s.onload = function () {
+        Calendly.initInlineWidget({ url: url, parentElement: document.getElementById("calendly") });
+      };
+      document.body.appendChild(s);
+
+      // The moment they book, send them to the pre-call video page.
+      // The short wait lets Calendly's own redirect go first if you've
+      // switched that on, since it carries their name and call time.
+      window.addEventListener("message", function (e) {
+        if (e.origin !== "https://calendly.com") return;
+        if (e.data && e.data.event === "calendly.event_scheduled") {
+          setTimeout(function () { window.location.href = PAGE.afterBooking; }, 1500);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

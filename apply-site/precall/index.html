@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>You're Booked In | HASHFIT</title>
+  <meta name="description" content="Your call with Aaliyan is booked. Watch this before we jump on.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" type="image/svg+xml" href="../assets/mark.svg">
+  <link rel="apple-touch-icon" href="../assets/mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+  <!-- ======================================================
+       EDIT THESE THREE LINES. That's all you need to touch.
+       ====================================================== -->
+  <script>
+    var PAGE = {
+      // Paste your pre-call video link between the quotes
+      // (YouTube unlisted, Vimeo, Loom, Wistia or Google Drive all work)
+      videoUrl: "",
+
+      // true if you filmed it upright on your phone, false if it's landscape
+      vertical: false,
+
+      // Where they send you the word from the end of the video
+      replyTo: "as a reply to my confirmation message"
+    };
+  </script>
+
+  <header class="wrap top">
+    <img src="../assets/logo.svg" alt="HASHFIT">
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <span class="tag">You're booked in</span>
+      <h1>Watch this <em>before</em> we jump on</h1>
+      <p class="sub" id="booked">Sweet, your call's locked in. The time and the Google Meet link are in your email.</p>
+    </section>
+
+    <div class="video" id="video">
+      <div class="video-empty">
+        <div>
+          <img src="../assets/mark.svg" alt=""><br>
+          Video coming soon
+        </div>
+      </div>
+    </div>
+    <p class="video-note">Turn your sound on. Watch the whole thing before the call.</p>
+
+    <section class="section">
+      <p class="label">Before the call</p>
+      <ol class="steps">
+        <li>
+          <span class="num">1</span>
+          <div>
+            <h3>Watch the whole video</h3>
+            <p>It covers how I coach and what we'll go through on the call, so we can spend the time on you instead of me explaining the basics.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <div>
+            <h3>Send me the word from the end</h3>
+            <p>Right at the end I give you one word. Send it to me <span id="replyTo">as a reply to my confirmation message</span> so I know you've watched it. Skip to the end and you won't know what it is.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <div>
+            <h3>Show up somewhere you can talk</h3>
+            <p>Come somewhere you can talk properly. Bring the honest version of what you eat and how you train.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="video-note">Can't make it anymore? Use the reschedule link in your confirmation email so the spot goes to someone else.</p>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <img src="../assets/mark.svg" alt="">
+    HASHFIT &middot; Coaching with Aaliyan
+  </footer>
+
+  <script src="../assets/video.js"></script>
+  <script>
+    (function () {
+      // Calendly adds these to the link when "Pass event details to your
+      // redirected page" is ticked on the event type.
+      var q = new URLSearchParams(location.search);
+      var first = q.get("invitee_first_name") || (q.get("invitee_full_name") || "").split(" ")[0];
+      var start = q.get("event_start_time");
+      var email = q.get("invitee_email") || "";
+
+      var when = "";
+      if (start) {
+        var d = new Date(start);
+        if (!isNaN(d)) {
+          when = new Intl.DateTimeFormat(undefined, {
+            weekday: "long", day: "numeric", month: "long",
+            hour: "numeric", minute: "2-digit", timeZoneName: "short"
+          }).format(d);
+        }
+      }
+
+      var booked = document.getElementById("booked");
+      var hey = first ? "Sweet " + first + ", your" : "Sweet, your";
+      if (when) {
+        booked.textContent = "";
+        booked.append(hey + " call's locked in for ");
+        var s = document.createElement("strong");
+        s.textContent = when;
+        booked.append(s, ". The Google Meet link is in your email.");
+      } else if (first) {
+        booked.textContent = hey + " call's locked in. The time and the Google Meet link are in your email.";
+      }
+
+      document.getElementById("replyTo").textContent = PAGE.replyTo;
+
+      mountVideo(document.getElementById("video"), PAGE.videoUrl, {
+        vertical: PAGE.vertical,
+        email: email,
+        title: "Watch this before our call"
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+:root {
+  --red: #E8312E;
+  --black: #0A0A0A;
+  --bone: #F4F1EC;
+  --ash: #8A847C;
+  --charcoal: #1C1A19;
+  --line: #2A2725;
+  --max: 880px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--bone);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--bone); }
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Header */
+.top {
+  padding: 22px 0 8px;
+  display: flex;
+  justify-content: center;
+}
+.top img { height: 46px; width: auto; display: block; }
+
+/* Hero */
+.hero { text-align: center; padding: 28px 0 22px; }
+
+.tag {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 14px;
+}
+
+h1 {
+  font-family: "Anton", Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(40px, 9vw, 76px);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+h1 em {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  text-transform: none;
+  color: var(--red);
+  letter-spacing: 0;
+  font-size: 1.08em;
+}
+
+.sub {
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 18px;
+  color: var(--bone);
+  text-wrap: pretty;
+}
+.sub strong { color: var(--bone); font-weight: 700; }
+.muted { color: var(--ash); }
+
+/* Video */
+.video {
+  position: relative;
+  width: 100%;
+  background: var(--charcoal);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+.video.vertical {
+  aspect-ratio: 9 / 16;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.video iframe,
+.video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+.video-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+  color: var(--ash);
+  font-size: 15px;
+}
+.video-empty img { width: 64px; height: 64px; opacity: 0.35; margin-bottom: 10px; }
+
+.video-note {
+  text-align: center;
+  font-size: 14px;
+  color: var(--ash);
+  margin: 12px 0 0;
+}
+
+/* Steps */
+.section { padding: 44px 0 0; }
+
+.label {
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin: 0 0 16px;
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.steps li {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  align-items: start;
+  background: var(--charcoal);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 18px 18px 16px;
+}
+.steps .num {
+  font-family: "Anton", Impact, sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--red);
+  text-align: center;
+  padding-top: 2px;
+}
+.steps h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.steps p { margin: 0; color: var(--ash); font-size: 16px; }
+
+/* CTA */
+.cta-row { text-align: center; padding: 28px 0 0; }
+.btn {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 18px 30px;
+  border-radius: 999px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn:hover { background: #ff3d39; transform: translateY(-1px); }
+.btn:focus-visible { outline: 2px solid var(--bone); outline-offset: 3px; }
+
+/* Booking embed */
+.booking {
+  background: var(--charcoal);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.calendly-inline-widget { min-width: 280px; height: 1060px; }
+
+/* Footer */
+.foot {
+  margin-top: 64px;
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  color: var(--ash);
+  font-size: 13px;
+}
+.foot img { height: 22px; width: auto; display: block; margin: 0 auto 10px; opacity: 0.9; }
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .hero { padding: 18px 0 18px; }
+  .sub { font-size: 17px; }
+  .video { border-radius: 10px; }
+  .steps li { grid-template-columns: 34px 1fr; gap: 10px; padding: 16px 14px; }
+  .steps .num { font-size: 26px; }
+  .btn { width: 100%; padding: 18px 20px; }
+  .calendly-inline-widget { height: 1150px; }
+}
